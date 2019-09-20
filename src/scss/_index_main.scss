@@ -1,0 +1,24 @@
+main {
+    display: flex;
+    justify-content: center;
+
+    .main {
+        &__wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 1024px;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        &__information {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+}

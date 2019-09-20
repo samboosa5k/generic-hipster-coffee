@@ -77,7 +77,7 @@ function compileScss( done, for_production = false ) {
             .pipe( csso() );
     }
 
-    return pipeline.pipe( gulp.dest( 'dist/css' ) );
+    /*    return pipeline.pipe( gulp.dest( 'dist/css' ) ); */
 
     return pipeline.pipe( sourcemaps.write( '.' ) )
         .pipe( gulp.dest( 'dist/css' ) );
@@ -119,6 +119,6 @@ function watchFiles( done ) {
 }
 
 // export tasks
-exports.publish = gulp.series( cleanAssets, publishHtml, publishFonts, publishImages );
+exports.publish = gulp.series( cleanAssets, publishHtml, publishFonts, publishImages, compileScssDevelopment );
 exports.build = gulp.series( cleanAssets, publishHtmlProduction, publishFonts, publishImages, compileScssProduction );
-exports.watch = gulp.series( cleanAssets, publishHtml, serve, watchFiles );
+exports.watch = gulp.series( cleanAssets, publishHtml, serve, watchFiles, publishImages );
