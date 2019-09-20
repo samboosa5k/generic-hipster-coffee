@@ -19,6 +19,7 @@ $pageWidth: 1024px;
 
 @import '_index_main.scss';
 @import '_header.scss';
+@import '_shop.scss';
 @import '_footer.scss';
 
 * {
@@ -47,6 +48,14 @@ h2 {
     line-height: 3rem;
 }
 
+h4 {
+    font-size: 2rem;
+}
+
 p {
     font-size: 1.25rem;
+}
+
+.subtitle {
+    font-size: 0.80rem;
 }

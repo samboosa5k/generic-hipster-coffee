@@ -1,0 +1,30 @@
+.products-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    max-width: $pageWidth;
+
+    &__card {
+        max-width: $pageWidth/2-32px;
+        padding-bottom: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        background-color: gainsboro;
+
+        h4,
+        p {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-bottom: 0.5rem;
+            padding-top: 0.5rem;
+        }
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+}
