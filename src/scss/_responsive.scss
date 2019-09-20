@@ -20,6 +20,10 @@
             }
         }
     }
+
+    .our-story {
+        font-size: 1.5rem;
+    }
 }
 
 @media (min-width: #{$sm}) {
@@ -30,6 +34,12 @@
 
     header {
         flex-direction: row;
+    }
+
+    .our-story {
+        font-size: 2rem;
+        padding: 1rem;
+        text-align: center;
     }
 }
 
