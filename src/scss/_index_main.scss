@@ -7,7 +7,7 @@ main {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            width: 1024px;
+            width: $pageWidth;
 
             img {
                 width: 100%;
@@ -18,12 +18,18 @@ main {
         &__information {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: space-evenly;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
         }
 
         &__navigation {
             display: flex;
             justify-content: center;
+
+            iframe {
+                transform: translateY(2rem);
+            }
         }
     }
 }

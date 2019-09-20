@@ -1,7 +1,31 @@
 footer {
+    padding: 4rem;
     width: 100vw;
     /* Visuals */
+    color: white;
     background-color: #343a40;
     /* Typography */
     text-align: center;
+
+    nav {
+        a {
+            padding: 1rem;
+            color: #1a72b3;
+        }
+    }
+
+    div {
+        p {
+            a {
+                padding: 0.5rem;
+                color: #1a72b3;
+            }
+        }
+    }
+}
+
+.footer-banner {
+    h1 {
+        padding: 2rem;
+    }
 }
