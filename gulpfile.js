@@ -1,22 +1,45 @@
-//  EXPLANATION:
-/*
-
-src/** --> DOUBLE ASTERISK MEANS ANY FILE IN FOLDER AND SUBFOLDERS
-
-*/
-
 // load modules
 const gulp = require( 'gulp' );
 const del = require( 'del' );
-const htmlmin = require( 'gulp-htmlmin' );
+const fs = require( 'fs' );
 const browsersync_server = require( 'browser-sync' ).create();
+const htmlmin = require( 'gulp-htmlmin' );
 const sass = require( 'gulp-sass' );
 const autoprefixer = require( 'gulp-autoprefixer' );
 const csso = require( 'gulp-csso' );
 const sourcemaps = require( 'gulp-sourcemaps' );
 
-// deletes all assets (HTML, fonts, images) in dist
+// creates default src folder structure
+function createStructure( done ) {
+    const folders = [
+        'dist',
+        'src',
+        'src/fonts',
+        'src/img',
+        'src/scss',
+    ];
+    const files = [
+        'src/index.html',
+    ];
 
+    folders.forEach( dir => {
+        if ( !fs.existsSync( dir ) ) {
+            fs.mkdirSync( dir );
+            console.log( 'folder created:', dir );
+        }
+    } );
+
+    files.forEach( file => {
+        if ( !fs.existsSync( file ) ) {
+            fs.writeFileSync( file, '' );
+            console.log( 'file created:', file );
+        }
+    } );
+
+    return done();
+}
+
+// deletes all assets (HTML, fonts, images) in dist
 function cleanAssets( done ) {
     return del(
         ['dist/**/*.html', 'dist/fonts/**/*', 'dist/img/**/*'],
@@ -55,33 +78,27 @@ function publishFonts( done ) {
 function publishImages( done ) {
     return gulp.src( 'src/img/**/*' )
         .pipe( gulp.dest( 'dist/img' ) );
-
 }
 
-//  SCSS COMPILATION
 // compile SCSS files
-
 function compileScss( done, for_production = false ) {
     let pipeline = gulp.src( 'src/scss/**/*.scss' )
-        // .pipe(sourcemaps.init())
+        .pipe( sourcemaps.init() )
         .pipe( sass().on( 'error', sass.logError ) )
-
-    if ( for_production ) {
-        pipeline.pipe( autoprefixer( {
+        .pipe( autoprefixer( {
             overrideBrowserslist: [
                 "last 2 version",
                 "> 2%"
             ],
             cascade: false
-        } ) )
-            .pipe( csso() );
-    }
+        } ) );
 
-    /*    return pipeline.pipe( gulp.dest( 'dist/css' ) ); */
+    if ( for_production ) {
+        pipeline.pipe( csso() );
+    }
 
     return pipeline.pipe( sourcemaps.write( '.' ) )
         .pipe( gulp.dest( 'dist/css' ) );
-
 }
 
 function compileScssProduction( done ) {
@@ -92,9 +109,15 @@ function compileScssDevelopment( done ) {
     return compileScss( done, false );
 }
 
-//  BROWSER SERVING - LIVE
-// browserSync server
+// watch files
+function watchFiles( done ) {
+    gulp.watch( "src/**/*.html", gulp.series( publishHtml, reload ) );
+    gulp.watch( "src/fonts/**/*", gulp.series( publishFonts, reload ) );
+    gulp.watch( "src/img/**/*", gulp.series( publishImages, reload ) );
+    gulp.watch( "src/scss/**/*.scss", gulp.series( compileScss, reload ) );
+}
 
+// browserSync server
 function serve( done ) {
     browsersync_server.init( {
         server: {
@@ -105,20 +128,43 @@ function serve( done ) {
 }
 
 // browserSync reload
-
 function reload( done ) {
     browsersync_server.reload();
     done();
 }
 
-// watch files
-
-function watchFiles( done ) {
-    gulp.watch( "src/**/*.html", gulp.series( publishHtml, reload ) );
-    gulp.watch( "src/scss/**/*.scss", gulp.series( compileScss, reload ) );
-}
-
 // export tasks
-exports.publish = gulp.series( cleanAssets, publishHtml, publishFonts, publishImages, compileScssDevelopment );
-exports.build = gulp.series( cleanAssets, publishHtmlProduction, publishFonts, publishImages, compileScssProduction );
-exports.watch = gulp.series( cleanAssets, publishHtml, serve, watchFiles, publishImages );
+exports.structure = createStructure;
+
+exports.publish = gulp.series(
+    cleanAssets,
+    publishHtml,
+    publishFonts,
+    publishImages
+);
+
+exports.build_prod = gulp.series(
+    cleanAssets,
+    publishHtmlProduction,
+    publishFonts,
+    publishImages,
+    compileScssProduction
+);
+
+exports.build_dev = gulp.series(
+    cleanAssets,
+    publishHtmlDevelopment,
+    publishFonts,
+    publishImages,
+    compileScssDevelopment
+);
+
+exports.watch = gulp.series(
+    cleanAssets,
+    publishHtmlDevelopment,
+    publishFonts,
+    publishImages,
+    compileScssDevelopment,
+    serve,
+    watchFiles
+);
