@@ -1,0 +1,31 @@
+
+
+.menu__wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.first-column {
+  display: flex;
+  flex-direction: column;
+  width: 354px;
+}
+
+.second-column {
+  display: flex;
+  flex-direction: column;
+  width: 354px;
+}
+
+
+.menu__wrapper  {
+  div {
+    margin-bottom: 2em;
+  }
+}
+
+// .menu__wrapper_right {
+//   display: flex;
+
+  
+// }
