@@ -20,5 +20,10 @@ main {
             flex-direction: row;
             justify-content: space-between;
         }
+
+        &__navigation {
+            display: flex;
+            justify-content: center;
+        }
     }
 }
