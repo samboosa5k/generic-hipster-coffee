@@ -1,0 +1,14 @@
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    max-height: 10rem;
+    background-color: #f8f9fa;
+
+    .logo {
+        max-height: 10rem;
+        max-width: 10rem;
+    }
+}
