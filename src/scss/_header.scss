@@ -1,11 +1,25 @@
+.header__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: $viewportWidth;
+    background-color: #f8f9fa;
+}
+
 header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100vw;
+    width: $pageWidth;
     max-height: 10rem;
-    background-color: #f8f9fa;
+
+    nav {
+        a {
+            padding: 1rem;
+            color: gray;
+        }
+    }
 
     .logo {
         max-height: 10rem;
